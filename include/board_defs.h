@@ -160,4 +160,53 @@
     }
 #endif
 
+// RP2040 USB
+#if BOARD_ID == 6
+    #define CRSF_TX 0
+    #define CRSF_RX 1
+
+    #define LED_TYPE LED_TYPE_NEOPIXEL
+    #define LED_PIN 22
+
+    #include <NeoPixelConnect.h>
+    NeoPixelConnect p(LED_PIN, 1, pio0, 0);
+    
+    void boardSetup() {
+      // noop
+    }
+
+    void led_off() {
+        p.neoPixelFill(0, 0, 0, true);
+    }
+    
+    void led_on() {
+        p.neoPixelFill(0, 0, 255, true);
+    }
+
+    void led_color(uint8_t r, uint8_t g, uint8_t b) {
+        p.neoPixelFill(r, g, b, true);
+    }
+#endif
+
+// ProMicro RP2040
+#if BOARD_ID == 7
+    #define CRSF_TX 12
+    #define CRSF_RX 13
+
+    #define LED_TYPE LED_TYPE_SINGLE
+    #define LED_PIN 17
+
+    void boardSetup() {
+      pinMode(LED_PIN,OUTPUT);
+    }
+
+    void led_off() {
+      digitalWrite(LED_PIN, LOW);
+    }
+    
+    void led_on() {
+      digitalWrite(LED_PIN, HIGH);
+    }
+#endif
+
 #endif
